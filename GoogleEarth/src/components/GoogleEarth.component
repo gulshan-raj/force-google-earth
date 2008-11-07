@@ -1,0 +1,59 @@
+<apex:component >
+    <apex:attribute name="kml" description="This is the KML map data"
+        type="string" required="true" />
+    <apex:attribute name="mapkey" description="This is the google map key"
+        type="string" required="true" />    
+    <apex:attribute name="height" description="This is the map height"
+        type="integer" default="500" />
+    <apex:attribute name="width" description="This is the map width"
+        type="integer" default="700" />
+   
+    <apex:attribute type="Account" name="look" required="true" 
+        description="account to look at " />
+    <apex:attribute type="string" name="location" required="true" 
+        description="string property to hold location info after a click " />
+        
+    <apex:outputPanel >
+    <apex:inputhidden value="{!location}" id="latlon" />
+    
+    <script src="http://www.google.com/jsapi?key={!mapkey}"></script>
+<script> google.load("earth", "1"); 
+    google.setOnLoadCallback(init);      
+    var ge = null;
+    
+    function init() {
+      google.earth.createInstance('{!$Component.map3d}',
+       initCallback, function (object) { } );
+    }
+     
+    function initCallback(object) {
+      ge = object;
+      ge.getWindow().setVisibility(true);
+   
+      var p = ge.parseKml( "<apex:outputText value="{!kml}" escape="false" />"  );
+      ge.getFeatures().appendChild(p);  
+     
+      var la = ge.createLookAt('');  
+      la.set({!look.lat__c}, {!look.lon__c} ,
+               155500, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 15, 900);  
+      ge.getView().setAbstractView(la);   
+      
+      for (var placemark = ge.getFeatures().getFirstChild(); 
+           placemark != null; placemark = placemark.getNextSibling()) {
+           // placemark is now an instance of KmlPlacemark
+           google.earth.addEventListener(placemark, 'click', function(event) {  
+              // store the location in a field on the page
+              document.getElementById('{!$Component.latlon}').value = 
+                    event.getTarget().getGeometry().getLatitude() + ',' + 
+                    event.getTarget().getGeometry().getLongitude();
+              placemarkClick(); });
+       }
+    }
+</script>
+ 
+    <!-- <div id='map3d_container'  
+       style='border: 1px solid silver; height: 550px; width: 600px;'> 
+          -->        
+<apex:outputPanel id="map3d" style="height: {!height}px; width: {!width}px;" layout="block" />
+</apex:outputPanel>
+</apex:component>

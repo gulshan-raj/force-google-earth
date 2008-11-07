@@ -1,0 +1,46 @@
+<apex:page standardController="Account" 
+	recordSetvar="accounts"
+	tabStyle="Earth_Plugin__tab" 
+	extensions="accountSetext" 
+	sidebar="false"> 
+	<apex:form >
+	<style>td {vertical-align:top;}</style>
+	 
+	<apex:pageBlock title="Google Earth Preview" id="preview">
+ 		<apex:outputPanel >
+			<b>View:</b>&nbsp;&nbsp;
+               <apex:selectList value="{!filterId}" size="1">
+				<apex:actionSupport event="onchange" />
+				<apex:selectOptions value="{!listviewoptions}" />
+			</apex:selectList>&nbsp;&nbsp;
+			<apex:commandButton value=" Go " />{!resultsize} accounts found&nbsp;&nbsp;&nbsp;&nbsp;
+			<apex:outputLink value="/ui/list/FilterEditPage?id={!filterId}&retURL=%2F001&cancelURL=%2F001%2Fo">Edit list view</apex:outputLink>
+		</apex:outputPanel>
+		<p ></p>
+		<apex:actionFunction name="placemarkClick" action="{!selected2}" rerender="detail" />
+   
+		<apex:panelGrid columns="2">
+		
+	 	  <c:GoogleEarth kml="{!kmlstring}" mapkey="{!forcekey}"   
+	 	  				look="{!firstRecord}" location="{!location}" />
+	
+	      <apex:outputPanel id="detail" >
+               <apex:pageBlock title="Account" mode="">
+               <apex:pageBlockSection title="Details" columns="1">
+                   <apex:outputField value="{!detailAccount.name}" />
+                   <apex:outputField value="{!detailAccount.Billingstreet}" />
+                   <apex:outputField value="{!detailAccount.billingcity}" />
+                   <apex:outputField value="{!detailAccount.billingstate}" />
+                   <apex:outputField value="{!detailAccount.phone}" />
+                   <apex:outputField value="{!detailAccount.website}" />
+               </apex:pageBlockSection>
+               </apex:pageBlock>
+           <!--  add a search window here ? -->
+           </apex:outputPanel>
+	
+		 </apex:panelGrid>
+	
+        </apex:pageBlock>
+	<apex:include pageName="AccountFields" />
+	</apex:form> 
+</apex:page>

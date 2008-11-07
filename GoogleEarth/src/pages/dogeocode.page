@@ -1,0 +1,15 @@
+<apex:page controller="exampleCon">
+	<apex:form >
+		<apex:outputPanel id="counter">
+        Un geocoded accounts : {!summary.uncoded} <br />
+        Geo-coded accounts   : {!summary.geocode} <br />
+			<apex:outputText value="Geo code counter: {!count}" />
+			<p>Message : {!msg}
+			<p />
+			<p><apex:outputText value="Account: {!acc.name}" /></p>
+
+		</apex:outputPanel>
+		<apex:actionPoller action="{!incrementCounter}" rerender="counter"
+			interval="5" />
+	</apex:form>
+</apex:page>

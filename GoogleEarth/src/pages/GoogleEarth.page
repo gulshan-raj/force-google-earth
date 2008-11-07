@@ -1,0 +1,41 @@
+<apex:page standardController="Account" recordSetvar="accounts"
+	extensions="accountSetext">
+	<apex:form id="theForm">
+		<apex:pageBlock title="Accounts Preview" id="preview">
+			<apex:pageBlockButtons >
+				<apex:commandButton value=" Generate KML "  
+				oncomplete="window.open('/apex/kml');"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Select Account List" columns="1"
+				collapsible="false">
+				<apex:outputPanel >   Select an account list view to map : 
+&nbsp;&nbsp;
+				<apex:selectList value="{!filterId}" size="1">
+					<apex:actionSupport event="onchange" rerender="list, total,preview" />
+					<apex:selectOptions value="{!listviewoptions}" />
+				</apex:selectList>
+&nbsp;&nbsp;
+<!-- List contains : {!resultSize} Accounts &nbsp;&nbsp;&nbsp;
+ -->
+					<apex:outputLink value="/ui/list/FilterEditPage?id={!filterId}&retURL=%2F001&cancelURL=%2F001%2Fo">Edit list view</apex:outputLink>
+
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection title="Preview of Accounts in selected list" columns="1"
+				collapsible="false">
+                
+				<apex:pageBlockTable var="a" value="{!accounts}" id="list">
+					<apex:column value="{!a.name}" />
+					<apex:column value="{!a.billingcity}" />
+					<apex:column value="{!a.billingstate}" />
+					<apex:column value="{!a.lat__c}" />
+					<apex:column value="{!a.lon__c}" />
+					<apex:column value="{!a.description}" rendered="false" />
+					<apex:column value="{!a.phone}" rendered="false" />
+					<apex:column value="{!a.website}" rendered="false" />
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>
