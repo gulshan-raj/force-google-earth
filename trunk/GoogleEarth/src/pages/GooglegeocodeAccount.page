@@ -1,0 +1,4 @@
+<apex:page standardController="account" extensions="GoogleGeoCodeExt" action="{!doGeocode}" >
+<!--  perform a geo code on this account  -->
+
+</apex:page>

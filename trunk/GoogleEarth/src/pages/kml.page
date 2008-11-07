@@ -1,0 +1,39 @@
+<apex:page standardcontroller="account" 
+    recordSetvar="accounts"
+	showheader="false" extensions="accountSetext" 
+	contenttype="application/vnd.google-earth.kml+xml#sfdc_foundation.kml" ><kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+  <name>sfdc_foundation.kml</name>
+  <Folder>
+   <name>Foundation Grantees</name>
+   <open>1</open>
+  <apex:repeat value="{!accountSet}" var="acc" >  
+  <Placemark>
+    <name><apex:outputtext value="{!acc.name}"  /></name>
+    <description><apex:outputtext value="{!acc.description}"  />
+    {!acc.billingcity}, {!acc.billingstate}      
+    {!acc.website}<br />
+    {!acc.phone}<br />
+    <a href="https://na1.salesforce.com/{!acc.id}" >view account</a>
+    </description>
+    <Point>
+      <coordinates>{!acc.lon__c},{!acc.lat__c},0</coordinates>
+    </Point>
+  </Placemark>
+  </apex:repeat>
+  </Folder>
+  </Document>
+</kml>
+<apex:dataTable var="a" value="{!accounts}" id="list" rendered="false">
+     <apex:column value="{!a.name}" />
+     <apex:column value="{!a.billingcity}" />
+     <apex:column value="{!a.billingstate}" />
+     <apex:column value="{!a.billingstreet}" />
+     <apex:column value="{!a.lat__c}" />
+     <apex:column value="{!a.lon__c}" />
+     <apex:column value="{!a.lon__c}" />
+     <apex:column value="{!a.description}" rendered="false" />
+     <apex:column value="{!a.phone}" rendered="false" />
+     <apex:column value="{!a.website}" rendered="false" />
+ </apex:dataTable>
+</apex:page>

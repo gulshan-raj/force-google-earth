@@ -1,0 +1,18 @@
+<apex:page standardController="Account" recordSetvar="accounts">
+<!--  
+	contains the list of fields that we need to map an account
+	fields for description and location should be added here
+	they can then be used in a standard set controller extension  
+-->
+<apex:dataTable var="a" value="{!accounts}" id="list" rendered="false">
+     <apex:column value="{!a.name}" />
+     <apex:column value="{!a.billingcity}" />
+     <apex:column value="{!a.billingstate}" />
+     <apex:column value="{!a.billingstreet}" />
+     <apex:column value="{!a.lat__c}" />
+     <apex:column value="{!a.lon__c}" />
+     <apex:column value="{!a.description}" rendered="false" />
+     <apex:column value="{!a.phone}" rendered="false" />
+     <apex:column value="{!a.website}" rendered="false" />
+ </apex:dataTable>
+</apex:page>

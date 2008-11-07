@@ -1,0 +1,34 @@
+<apex:page standardController="Account" recordSetvar="accounts"
+	extensions="accountSetext">
+
+	<apex:form id="theForm">
+	<apex:pageBlock title="Accounts Preview"
+		            rendered="{!selectedCount == 0.0}">
+		<apex:outputPanel rendered="{!selectedCount == 0.0}">
+			<h2>No accounts selected <a
+				href="javascript:window.history.back();">Back to List</a></h2>
+		</apex:outputPanel>
+	</apex:pageBlock>
+
+	<apex:pageBlock title="Accounts Preview" id="preview" 
+	                rendered="{!selectedCount != 0.0}">
+		<apex:pageBlockButtons >
+			<apex:commandButton value=" Generate KML " action="{!generateKML2}" />
+		</apex:pageBlockButtons>
+
+		<apex:pageBlockSection title="Preview of Accounts in selected list"
+			columns="1" collapsible="false">
+			<apex:pageBlockTable var="a" value="{!selected}" id="list">
+				<apex:column value="{!a.name}" />
+				<apex:column value="{!a.billingcity}" />
+				<apex:column value="{!a.billingstate}" />
+				<apex:column value="{!a.lat__c}" />
+				<apex:column value="{!a.lon__c}" />
+				<apex:column value="{!a.description}" rendered="false" />
+				<apex:column value="{!a.phone}" rendered="false" />
+				<apex:column value="{!a.website}" rendered="false" />
+			</apex:pageBlockTable>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	</apex:form>
+</apex:page>
